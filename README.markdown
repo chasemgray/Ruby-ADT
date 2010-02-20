@@ -1,32 +1,23 @@
-# DBF
+# Ruby-ADT
 
-DBF is a small fast library for reading dBase, xBase, Clipper and FoxPro database files
+Ruby ADT is a small fast library for reading Advantage Database Server database files (.ADT)
 
-* Project page: <http://github.com/infused/dbf>
-* API Documentation: <http://rdoc.info/projects/infused/dbf>
-* Report bugs: <http://github.com/infused/dbf/issues>
-* Questions: Email <mailto:keithm@infused.org> and put DBF somewhere in the subject line
-
-## Features
-
-* No external dependencies
-* Fields are type cast to the appropriate Ruby types
-* ActiveRecord like finder methods
-* Ability to dump the database schema in the portable ActiveRecord::Schema format
-* Ruby 1.9.1 compatible
+* Project page: <http://github.com/chasemgray/Ruby-ADT>
+* Report bugs: <http://github.com/chasemgray/Ruby-ADT/issues>
+* Questions: Email <mailto:chase@ratchetsoftware.com> and put ADT somewhere in the subject line
 
 ## Installation
   
-    gem install dbf
+    gem install adt
   
 ## Basic Usage
 
-Load a DBF file:
+Load an ADT file:
 
     require 'rubygems'
     require 'dbf'
 
-    table = DBF::Table.new("widgets.dbf")
+    table = ADT::Table.new("test.adt")
 
 Enumerate all records
 
@@ -72,11 +63,11 @@ otherwise all records will be loaded into memory.
 
 An example of migrating a DBF book table to ActiveRecord using a migration:
 
-    require 'dbf'
+    require 'adt'
 
     class CreateBooks < ActiveRecord::Migration
       def self.up
-        table = DBF::Table.new('db/dbf/books.dbf')
+        table = ADT::Table.new('db/adt/books.adt')
         eval(table.schema)
 
         table.each do |record|
@@ -89,19 +80,9 @@ An example of migrating a DBF book table to ActiveRecord using a migration:
       end
     end
   
-## Command-line utility
-
-A small command-line utility called dbf is installed along with the gem.
-
-    $ dbf -h
-    usage: dbf [-h|-s|-a] filename
-      -h = print this message
-      -s = print summary information
-      -a = create an ActiveRecord::Schema
-  
 ## Limitations and known bugs
   
-* DBF is read-only
+* ADT is read-only
 * External index files are not used
 
 ## License
