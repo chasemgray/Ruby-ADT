@@ -12,6 +12,7 @@ Jeweler::Tasks.new do |s|
   s.platform = Gem::Platform::RUBY
   s.authors = ['Chase Gray']
   s.email = 'chase@ratchetsoftware.com'
+  s.add_dependency('activesupport', ['>= 2.1.0'])
   s.homepage = 'http://github.com/chasemgray/Ruby-ADT'
 end
 

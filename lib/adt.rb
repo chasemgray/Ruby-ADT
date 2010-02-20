@@ -1,18 +1,18 @@
-
+require 'rubygems'
 require 'date'
+require 'active_support'
 
-class Array
-  def every(count)
-    chunks = []
-    each_with_index do |item, index|
-      chunks << [] if index % count == 0
-      chunks.last << item
-    end
-    chunks
-  end
-  alias / every
+if RUBY_VERSION > '1.9'
+ require 'csv'
+ unless defined? FCSV
+   class Object
+     FCSV = CSV
+     alias_method :FCSV, :CSV
+   end
+ end
+else
+ require 'fastercsv'
 end
-
 
 require 'adt/globals'
 require 'adt/record'

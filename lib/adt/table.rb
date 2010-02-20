@@ -213,8 +213,8 @@ module ADT
       @data.rewind
     
       #column_count_offset = 33, record_count_offset = 24, record_length_offset = 36
-      @record_count, @column_count, @record_length = data.read(HEADER_LENGTH).unpack("@24 I x5 S x I").first
-
+      @record_count, @data_offset, @record_length = data.read(HEADER_LENGTH).unpack("@24 I x4 I I")
+      @column_count = (@data_offset-400)/200
     end
     
     
@@ -244,7 +244,7 @@ module ADT
     #
     # @params [Fixnum] offset
     def seek(offset)
-      @data.seek(HEADER_LENGTH + COLUMN_LENGTH * @column_count + offset)
+      @data.seek(@data_offset + offset)
     end
   
     # Seek to a record
