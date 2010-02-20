@@ -8,7 +8,9 @@ There doesn't seem to be a footer
 
 400 byte header
 
-byte 33 in the header specifies the number of columns - the previous and following bytes also change when columns are added and removed but I don't know why.
+byte 24 in the header specifies the number of rows. 32-bits I believe
+byte 33 in the header specifies the number of columns - 16-bits - the previous bytes also change when columns are added and removed but I don't know why.  It doesn't matter for my purposes.
+
 
 column names follow header
 

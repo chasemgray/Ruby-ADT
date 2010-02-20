@@ -1,0 +1,67 @@
+module ADT
+  # An instance of ADT::Record represents a row in the ADT file
+  class Record
+    attr_reader :attributes
+    
+    delegate :columns, :to => :@table
+    
+    # Initialize a new ADT::Record
+    #
+    # @param [ADT::Table] table
+    def initialize(table)
+      @table, @data = table, table.data
+      
+      initialize_values
+      define_accessors
+    end
+    
+    # Equality
+    #
+    # @param [ADT::Record] other
+    # @return [Boolean]
+    def ==(other)
+      other.respond_to?(:attributes) && other.attributes == attributes
+    end
+    
+    # Maps a row to an array of values
+    #
+    # @return [Array]
+    def to_a
+      columns.map { |column| @attributes[column.name.underscore] }
+    end
+    
+    private
+    
+    # Defined attribute accessor methods
+    def define_accessors
+      columns.each do |column|
+        underscored_column_name = column.name.underscore
+        unless respond_to?(underscored_column_name)
+          self.class.send :define_method, underscored_column_name do
+            @attributes[column.name.underscore]
+          end
+        end
+      end
+    end
+    
+    # Initialize values for a row
+    def initialize_values
+      @attributes = columns.inject({}) do |hash, column|
+
+        value = unpack_data(column.length)
+        hash[column.name] = column.type_cast(value)
+        hash[column.name.underscore] = column.type_cast(value)
+      
+        hash
+      end
+    end
+    
+    # Unpack raw data from database
+    #
+    # @param [Fixnum] length
+    def unpack_data(length)
+      @data.read(length).unpack("a#{length}").first
+    end
+    
+  end
+end
