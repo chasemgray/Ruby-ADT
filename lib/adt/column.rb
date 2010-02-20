@@ -2,6 +2,10 @@ module ADT
 	class ColumnLengthError < ADTError; end
 	class ColumnNameError < ADTError; end
 
+  TYPES = {4 => 'character', 10 => 'double', 11 => 'integer', 12 => 'short', 20 => 'cicharacter', 3 => 'date', 13 => 'time', 14 => 'timestamp', 15 => 'autoinc'}
+  FLAGS = {'character' => 'A', 'double' => 'F', 'integer' => 'i', 'short' => 'S', 'cicharacter' => 'A', 'date' => '?', 'time' => '?', 'timestamp' => '?', 'autoinc' => 'I'}
+
+
 	class Column
 	  attr_reader :name, :type, :length
   
@@ -16,15 +20,20 @@ module ADT
 	    raise ColumnLengthError, "field length must be greater than 0" unless length > 0
 	    raise ColumnNameError, "column name cannot be empty" if @name.length == 0
 	  end
-  
-	  # Cast value to native type
-	  #
-	  # @param [String] value
-	  # @return [Fixnum, Float, Date, DateTime, Boolean, String]
-	  def type_cast(value)
 
-	  end
-  
+    def data_type(id)
+      TYPES[id]
+    end
+
+    def flag(type, length = 0)
+      data_type = data_type(type)
+      flag = FLAGS[data_type]
+      if flag.eql? 'character' or flag.eql? 'cicharacter'
+        return flag + length.to_s
+      end
+      return flag
+    end
+ 
 	  # Decode a DateTime value
 	  #
 	  # @param [String] value
@@ -33,14 +42,6 @@ module ADT
 	    days, milliseconds = value.unpack('l2')
 	    seconds = milliseconds / 1000
 	    DateTime.jd(days, seconds/3600, seconds/60 % 60, seconds % 60) rescue nil
-	  end
-  
-	  # Decode a boolean value
-	  #
-	  # @param [String] value
-	  # @return [Boolean]
-	  def boolean(value)
-	    value.strip =~ /^(y|t)$/i ? true : false
 	  end
   
 	  # Schema definition
@@ -54,19 +55,23 @@ module ADT
 	  #
 	  # @return [String]
 	  def schema_data_type
-	    case type
-	    when "N"
-	      decimal > 0 ? ":float" : ":integer"
-	    when "I"
-	      ":integer"
-	    when "D"
+	    case data_type(type)
+	    when "character"
+	      ":string, :limit => #{length}"
+	    when "cicharacter"
+	      ":string, :limit => #{length}"
+	    when "double"
+	      ":float"
+	    when "date"
 	      ":date"
-	    when "T"
-	      ":datetime"
-	    when "L"
-	      ":boolean"
-	    when "M"
-	      ":text"
+	    when "time"
+	      ":timestamp"
+	    when "timestamp"
+	      ":timestamp"
+      when "integer"
+        ":integer"
+      when "autoinc"
+        ":integer"
 	    else
 	      ":string, :limit => #{length}"
 	    end

@@ -47,21 +47,16 @@ module ADT
     # Initialize values for a row
     def initialize_values
       @attributes = columns.inject({}) do |hash, column|
-
-        value = unpack_data(column.length)
-        hash[column.name] = column.type_cast(value)
-        hash[column.name.underscore] = column.type_cast(value)
+        
+        #get the unpack flag to get this data.
+        value = @data.read(column.length).unpack("#{column.flag(type, column.length)}").first
+        hash[column.name] = value
+        hash[column.name.underscore] = value
       
         hash
       end
     end
     
-    # Unpack raw data from database
-    #
-    # @param [Fixnum] length
-    def unpack_data(length)
-      @data.read(length).unpack("a#{length}").first
-    end
     
   end
 end
