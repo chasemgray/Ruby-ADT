@@ -15,7 +15,7 @@ Ruby ADT is a small fast library for reading Advantage Database Server database 
 Load an ADT file:
 
     require 'rubygems'
-    require 'dbf'
+    require 'ruby-adt'
 
     table = ADT::Table.new("test.adt")
 
@@ -84,6 +84,9 @@ An example of migrating a DBF book table to ActiveRecord using a migration:
   
 * ADT is read-only
 * External index files are not used
+
+## Acknowledgements 
+
 
 ## License
 
