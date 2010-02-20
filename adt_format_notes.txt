@@ -1,0 +1,34 @@
+04 followed by 32-bit zero (00 00 00 00) seem to precede each new row of data.
+
+Seems like for each column we have to know how long each data set is because there is no separator between data.
+
+The actual data is stored at the end of the file. 
+There is a header with unknown information followed by information about the columns.
+There doesn't seem to be a footer
+
+400 byte header
+
+byte 33 in the header specifies the number of columns - the previous and following bytes also change when columns are added and removed but I don't know why.
+
+column names follow header
+
+Column names have a reserved 128 characters (bytes)  
+column names are followed by 72 bytes of information about the column.
+
+2 bytes after the 128 byte column name is the column type:
+00 04 - character
+00 0A - double
+00 0B - integer
+00 0C - shortint
+00 14 - cicharacter
+00 03 - date
+00 0D - time
+00 0E - timestamp
+00 0F - autoinc
+
+8th byte after 128 byte column name specifies the length in bytes
+
+
+how to parse integers? 
+how to parse doubles?
+how to parse dates and times?
