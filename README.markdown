@@ -1,3 +1,10 @@
+# NOTICE
+This is an early version and I don't expect it to work in all cases.
+
+Currently, the biggest item that I am working on is getting dates extracted correctly.
+
+If you have suggestions or an .adt file that has issues being read then let me know and I might be able to work on it.
+
 # Ruby-ADT
 
 Ruby ADT is a small fast library for reading Advantage Database Server database files (.ADT)
