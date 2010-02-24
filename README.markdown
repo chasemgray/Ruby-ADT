@@ -22,7 +22,7 @@ Ruby ADT is a small fast library for reading Advantage Database Server database 
 Load an ADT file:
 
     require 'rubygems'
-    require 'ruby-adt'
+    require 'adt'
 
     table = ADT::Table.new("test.adt")
 
