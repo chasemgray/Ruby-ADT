@@ -15,7 +15,7 @@ Ruby ADT is a small fast library for reading Advantage Database Server database 
 
 ## Installation
   
-    gem install adt
+    gem install ruby-adt
   
 ## Basic Usage
 
