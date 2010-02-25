@@ -10,6 +10,7 @@ If you have suggestions or an .adt file that has issues being read then let me k
 Ruby ADT is a small fast library for reading Advantage Database Server database files (.ADT)
 
 * Project page: <http://github.com/chasemgray/Ruby-ADT>
+* Original post: <http://chase.ratchetsoftware.com/2010/02/reading-advantage-database-server-files-adt-in-ruby>
 * Report bugs: <http://github.com/chasemgray/Ruby-ADT/issues>
 * Questions: Email <mailto:chase@ratchetsoftware.com> and put ADT somewhere in the subject line
 
